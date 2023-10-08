@@ -1,0 +1,58 @@
+package com.example.bodymassindex
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import kotlin.math.pow
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val calculate = findViewById<Button>(R.id.calculate)
+        calculate.setOnClickListener {
+            (showresult())
+        }
+
+        }
+
+    private fun calculateResult(): Double {
+        val height_val = findViewById<EditText>(R.id.height)
+        val weight_val = findViewById<EditText>(R.id.weight)
+
+        val heightText = height_val.text.toString()
+        val weightText = weight_val.text.toString()
+
+        if (heightText.isBlank() || weightText.isBlank()) {
+            // Handle empty input
+            return 0.0 // You can choose an appropriate default value here
+        }
+
+        val height = heightText.toDoubleOrNull()
+        val weight = weightText.toDoubleOrNull()
+
+        if (height == null || weight == null) {
+            // Handle invalid input (non-numeric input)
+            return 0.0 // You can choose an appropriate default value here
+        }
+
+        val BMI = weight / height.pow(2)
+        return BMI
+    }
+
+
+    private fun showresult(){
+        val bmi = calculateResult()
+        val resultbmi = findViewById<TextView>(R.id.result)
+        val resultText = "%.2f".format(bmi)
+        resultbmi.text = "Your BMI is: $resultText"
+
+    }
+
+
+
+        }
+
